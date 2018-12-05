@@ -41,10 +41,13 @@ class AdController extends AbstractController
         $form->handleRequest($request);
 
         if( $form->isSubmitted() && $form->isValid() ) {
-            foreach( $ad->getImages()  as $image ) {
+            foreach( $ad->getImages() as $image ) {
                 $image->setAd($ad);
                 $manager->persist($image);
             }
+
+            $ad->setAuthor($this->getUser());
+
             $manager->persist($ad);
             $manager->flush();
 
