@@ -6,6 +6,7 @@ use App\Entity\Booking;
 use App\Form\ApplicationType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use App\Form\DataTransformer\FrenchToDateTimeTransformer;
@@ -35,6 +36,10 @@ class BookingType extends ApplicationType
     {
         $resolver->setDefaults([
             'data_class' => Booking::class,
+            'validation_groups' => [
+                'Default',
+                'Front'
+            ]
         ]);
     }
 }
