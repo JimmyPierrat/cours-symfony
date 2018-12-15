@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Ad;
 use App\Form\AnnonceType;
-use App\Service\Pagination;
 use App\Repository\AdRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -17,18 +16,15 @@ class AdminAdController extends AbstractController
     /**
      * Permet d'afficher toutes les annonces enregistrées
      * 
-     * @Route("/admin/ads/{page<\d+>?1}", name="admin_ads_index")
+     * @Route("/admin/ads", name="admin_ads_index")
      * 
      * @param AdRepository $repo
      * @return Response
      */
-    public function index(AdRepository $repo, $page, Pagination $pagination )
+    public function index(AdRepository $repo)
     {
-        $pagination ->setEntityClass(Ad::class)
-                    ->setPage($page);
-
         return $this->render('admin/ad/index.html.twig', [
-            'pagination' => $pagination
+            'ads' => $repo->findAll()
         ]);
     }
 
